@@ -1,12 +1,11 @@
 import React from 'react';
-
 import Provider from './provider/';
-import PlanetsTable from './components/PlanetsTable';
+import Home from './pages/Home';
 
 function App() {
   return (
     <Provider>
-      <PlanetsTable />
+      <Home />
     </Provider>
   );
 }
