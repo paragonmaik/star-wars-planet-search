@@ -44,7 +44,98 @@ function HeaderFilter() {
 
   return (
     <header>
-      
+      <input
+        data-testid="name-filter"
+        type="text"
+        onChange={ ({ target: { value } }) => handleFilterByName({ name: value }) }
+      />
+      <form onSubmit={ handleFilterByNumeric }>
+        <select
+          data-testid="column-filter"
+          id="column"
+          onChange={ handleSelectInput }
+        >
+          {selectOptions.map((option) => <option key={ option }>{ option }</option>)}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          id="comparison"
+          onChange={ handleSelectInput }
+        >
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
+        </select>
+        <input
+          data-testid="value-filter"
+          id="value"
+          type="number"
+          defaultValue="0"
+          onChange={ handleSelectInput }
+        />
+        <button
+          type="submit"
+          data-testid="button-filter"
+
+        >
+          Filtrar
+        </button>
+      </form>
+      <button
+        data-testid="button-remove-filters"
+        type="button"
+        onClick={ handleRemoveAllFilters }
+      >
+        Remover Filtros
+      </button>
+      <div className="selected-filter-container">
+        {filters.filterByNumeric.length > 0 && (
+          filters.filterByNumeric.map(({ column, comparison, value }) => (
+            <div data-testid="filter" key={ column }>
+              <p>{ column }</p>
+              <p>{ comparison }</p>
+              <p>{ value }</p>
+              <button
+                type="button"
+                onClick={ () => handleRemoveSingleFilter(column) }
+              >
+                X
+              </button>
+            </div>))
+        )}
+      </div>
+      <div className="sort-container">
+        <form onSubmit={ handleSortPlanets }>
+          <select
+            data-testid="column-sort"
+            id="column"
+            onChange={ handleSelectSortInput }
+          >
+            {selectSortOptions
+              .map((option) => <option key={ option }>{ option }</option>)}
+          </select>
+          <input
+            onClick={ handleRadioInput }
+            value="ASC"
+            name="sort"
+            data-testid="column-sort-input-asc"
+            type="radio"
+          />
+          <input
+            onClick={ handleRadioInput }
+            value="DESC"
+            name="sort"
+            data-testid="column-sort-input-desc"
+            type="radio"
+          />
+          <button
+            type="submit"
+            data-testid="column-sort-button"
+          >
+            Ordenar
+          </button>
+        </form>
+      </div>
     </header>
   );
 }
