@@ -19,13 +19,28 @@ function Provider({ children }) {
     },
   });
 
+  const handleSort = (contextObj) => {
+    setFilters({ ...filters, order: contextObj });
+  };
+
+  const handleFilterByColumn = (contextObj) => {
+    setFilters({ ...filters, filterByNumeric: [...filters.filterByNumeric, contextObj] });
+  };
+
+  const handleFilterByName = (contextObj) => {
+    setFilters({ ...filters, filterByName: contextObj });
+  };
+
   const contextValue = {
-     planetsList,
-      filters,
-      selectOptions,
-      setFilters,
-      setSelectOptions,
-      setPlanetsList 
+    planetsList,
+    filters,
+    selectOptions,
+    handleFilterByColumn,
+    handleFilterByName,
+    handleSort,
+    setFilters,
+    setSelectOptions,
+    setPlanetsList 
   };
 
   return (
