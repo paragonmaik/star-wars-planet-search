@@ -3,17 +3,29 @@ import PropTypes from 'prop-types';
 import Context from '../context/';
 
 function Provider({ children }) {
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState(0);
+  const [selectOptions, setSelectOptions] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+
+  const [planetsList, setPlanetsList] = useState();
+
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumeric: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
+  });
 
   const contextValue = {
-    column,
-    setColumn,
-    comparison,
-    setComparison,
-    value,
-    setValue,
+     planetsList,
+      filters,
+      selectOptions,
+      setFilters,
+      setSelectOptions,
+      setPlanetsList 
   };
 
   return (
