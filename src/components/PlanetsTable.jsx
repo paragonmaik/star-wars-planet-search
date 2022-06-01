@@ -1,43 +1,55 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PLANETS_ENDPOINT from '../planetsEndpoint';
+import Context from '../context/';
 
 function PlanetsTable() {
-  const [planetsList, setPlanetsList] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectFilter, setSelectFilter] = useState('population');
-  const [comparisonFilter, setComparisonFilter] = useState('maior que');
-  const [numberFilter, setNumberFilter] = useState(0);
-  const [isFiltered, setIsFiltered] = useState(false);
+  const { filters, planetsList } = useContext(Context);
+  const [filteredPlanetsList, setFilteredPlanetsList] = useState([]);
 
-  const handleQueryFilter = ({ target: { value } }) => {
-    setSearchQuery(value);
-  };
+  const handleSort = (a, b) => {
+    const { order } = filters;
+    const returnedSortNumber = 1;
 
-  const handleSelectFilters = (value, filter) => {
-    if (filter === 'select') {
-      setSelectFilter(value);
-    }
-    if (filter === 'comparison') {
-      setComparisonFilter(value);
-    }
-    if (filter === 'number') {
-      setNumberFilter(+value);
-    }
-  };
+    switch (order.column) {
+    case 'name':
+      return (a[order.column] > b[order.column] ? 1 : -returnedSortNumber);
 
-  const handleClickFilter = () => {
-    setIsFiltered(true);
+    case 'orbital_period':
+      return +a[order.column] < +b[order.column] ? 1 : -returnedSortNumber;
+
+    case 'diameter':
+      return +a[order.column] > +b[order.column] ? 1 : -returnedSortNumber;
+
+    case 'population':
+      return ((typeof +a[order.column] === typeof a[order.column])
+    && (typeof +a[order.column] !== typeof a[order.column]))
+    || (+b[order.column] - +a[order.column]);
+
+    default:
+      return true;
+    }
   };
 
   useEffect(() => {
-    const handlePlanetsSearch = async () => {
+    const { filterByName, filterByNumeric } = filters;
 
-      const { results } = await fetch(PLANETS_ENDPOINT)
-        .then((response) => response.json());
-      setPlanetsList(results);
-    };
-    handlePlanetsSearch();
-  }, []);
+    let planetsListPlaceHolder = planetsList?.filter(({ name }) => (name.toLowerCase())
+      .includes(filterByName.name)).sort((a, b) => handleSort(a, b));
+
+    filterByNumeric.forEach(({ column, comparison, value }) => {
+      planetsListPlaceHolder = planetsListPlaceHolder.filter((planet) => {
+        if (comparison === 'maior que') {
+          return +planet[column] > +value;
+        } if (comparison === 'menor que') {
+          return +planet[column] < +value;
+        } if (comparison === 'igual a') {
+          return +planet[column] === +value;
+        }
+        return true;
+      });
+      setFilteredPlanetsList(planetsListPlaceHolder);
+    });
+    setFilteredPlanetsList(planetsListPlaceHolder);
+  }, [filters, planetsList]);
 
   return (
     <section>
