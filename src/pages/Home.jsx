@@ -17,7 +17,7 @@ function Home() {
 
   return (
     <>
-      {/* <HeaderFilter /> */}
+      <HeaderFilter />
       <PlanetsTable />
     </>
   );

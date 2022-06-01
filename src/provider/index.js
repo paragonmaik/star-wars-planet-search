@@ -73,12 +73,3 @@ Provider.propTypes = {
 }.isRequired;
 
 export default Provider;
-
-// {
-//     filterByNumericValues: [
-//       {
-//         column: 'population',
-//         comparison: 'maior que',
-//         value: '100000',
-//       }
-//     ]
