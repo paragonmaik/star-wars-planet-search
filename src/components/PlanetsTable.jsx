@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PLANETS_ENDPOINT from '../planetsEndpoint';
 
 function PlanetsTable() {
@@ -41,44 +41,6 @@ function PlanetsTable() {
 
   return (
     <section>
-      <header>
-        <input
-          data-testid="name-filter"
-          type="text"
-          onChange={ handleQueryFilter }
-        />
-        <select
-          onChange={ ({ target: { value } }) => handleSelectFilters(value, 'select') }
-          data-testid="column-filter"
-        >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
-        </select>
-        <select
-          onChange={ ({ target: { value } }) => handleSelectFilters(value, 'comparison') }
-          data-testid="comparison-filter"
-        >
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
-        </select>
-        <input
-          onChange={ ({ target: { value } }) => handleSelectFilters(value, 'number') }
-          value={ numberFilter }
-          data-testid="value-filter"
-          type="number"
-        />
-        <button
-          onClick={ handleClickFilter }
-          type="button"
-          data-testid="button-filter"
-        >
-          Filtrar
-        </button>
-      </header>
       <table>
         <tbody>
           <tr>
@@ -96,38 +58,22 @@ function PlanetsTable() {
             <th>edited</th>
             <th>url</th>
           </tr>
-          {planetsList.filter(({ name }) => name.toLowerCase().includes(searchQuery))
-            .filter((planet) => {
-              if (isFiltered) {
-                if (comparisonFilter === 'maior que') {
-                  return planet[selectFilter] > numberFilter;
-                }
-                if (comparisonFilter === 'menor que') {
-                  return planet[selectFilter] < numberFilter;
-                }
-                if (comparisonFilter === 'igual a') {
-                  console.log(numberFilter, planet[selectFilter]);
-                  return planet[selectFilter] === numberFilter.toString();
-                }
-              }
-              return planet;
-            })
-            .map((planet) => (
-              <tr key={ planet.name }>
-                <td>{planet.name}</td>
-                <td>{planet.rotation_period}</td>
-                <td>{planet.orbital_period}</td>
-                <td>{planet.diameter}</td>
-                <td>{planet.climate}</td>
-                <td>{planet.gravity}</td>
-                <td>{planet.terrain}</td>
-                <td>{planet.surface_water}</td>
-                <td>{planet.population}</td>
-                <td>{planet.films}</td>
-                <td>{planet.created}</td>
-                <td>{planet.edited}</td>
-                <td>{planet.url}</td>
-              </tr>))}
+          {filteredPlanetsList?.map((planet) => (
+            <tr key={ planet.name }>
+              <td data-testid="planet-name">{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>))}
         </tbody>
       </table>
     </section>
