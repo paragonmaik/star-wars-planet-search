@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import HeaderFilter from '../components/HeaderFilter';
 import PlanetsTable from '../components/PlanetsTable';
-import MyContext from '../context/MyContext';
+import Context from '../context/';
 import searchPlanets from '../services/api';
 
 function Home() {
-  const { setPlanetsList } = useContext(MyContext);
+  const { setPlanetsList } = useContext(Context);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -17,7 +17,7 @@ function Home() {
 
   return (
     <>
-      <HeaderFilter />
+      {/* <HeaderFilter /> */}
       <PlanetsTable />
     </>
   );
