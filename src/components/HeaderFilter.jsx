@@ -21,6 +21,27 @@ function HeaderFilter() {
     setOrderObj({ ...orderObj, sort: value });
   };
 
+  const handleSelectSortInput = ({ target: { value } }) => {
+    setOrderObj({ ...orderObj, column: value });
+  };
+
+  const handleSelectInput = ({ target: { id, value } }) => {
+    setFilterByNumericObj({ ...filterByNumericObj, [id]: value });
+  };
+
+  const handleSortPlanets = (event) => {
+    event.preventDefault();
+    handleSort(orderObj);
+  };
+
+  const handleFilterByNumeric = (event) => {
+    const { column } = filterByNumericObj;
+    event.preventDefault();
+    handleFilterByColumn(filterByNumericObj);
+    const newSelectOptions = selectOptions.filter((option) => option !== column);
+    setSelectOptions(newSelectOptions);
+  };
+
   return (
     <header>
       
