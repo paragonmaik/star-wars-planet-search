@@ -57,17 +57,16 @@ function PlanetsTable() {
         <tbody>
           <tr>
             <th>Planeta</th>
-            <th>Rotation Period</th>
-            <th>Orbital Period</th>
-            <th>Diameter</th>
-            <th>Climate</th>
-            <th>Gravity</th>
-            <th>Terrain</th>
-            <th>Surface Water</th>
-            <th>Population</th>
-            <th>Films</th>
-            <th>Created</th>
-            <th>edited</th>
+            <th>Período de Rotação</th>
+            <th>Período de Órbita</th>
+            <th>Diâmetro</th>
+            <th>Clima</th>
+            <th>Gravidade</th>
+            <th>Terreno</th>
+            <th>Superfície Aquática</th>
+            <th>População</th>
+            <th>Criado</th>
+            <th>Editado</th>
             <th>url</th>
           </tr>
           {filteredPlanetsList?.map((planet) => (
@@ -81,7 +80,6 @@ function PlanetsTable() {
               <td>{planet.terrain}</td>
               <td>{planet.surface_water}</td>
               <td>{planet.population}</td>
-              <td>{planet.films}</td>
               <td>{planet.created}</td>
               <td>{planet.edited}</td>
               <td>{planet.url}</td>

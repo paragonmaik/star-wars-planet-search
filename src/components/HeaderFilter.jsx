@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Context from '../context/';
+import logo from '../images/star_wars.png';
 
 function HeaderFilter() {
   const [filterByNumericObj, setFilterByNumericObj] = useState({
@@ -43,12 +44,16 @@ function HeaderFilter() {
   };
 
   return (
-    <header>
+    <header className="filters-header">
+      <img src={ logo } alt="Logo" />
+      <label>
+        Pesquisar por Nome
       <input
         data-testid="name-filter"
         type="text"
         onChange={ ({ target: { value } }) => handleFilterByName({ name: value }) }
       />
+      </label>
       <form onSubmit={ handleFilterByNumeric }>
         <select
           data-testid="column-filter"
@@ -114,13 +119,18 @@ function HeaderFilter() {
             {selectSortOptions
               .map((option) => <option key={ option }>{ option }</option>)}
           </select>
-          <input
-            onClick={ handleRadioInput }
-            value="ASC"
-            name="sort"
-            data-testid="column-sort-input-asc"
-            type="radio"
-          />
+          <label>
+            ASC
+            <input
+              onClick={ handleRadioInput }
+              value="ASC"
+              name="sort"
+              data-testid="column-sort-input-asc"
+              type="radio"
+            />
+        </label>
+        <label>
+          DESC
           <input
             onClick={ handleRadioInput }
             value="DESC"
@@ -128,6 +138,7 @@ function HeaderFilter() {
             data-testid="column-sort-input-desc"
             type="radio"
           />
+        </label>
           <button
             type="submit"
             data-testid="column-sort-button"

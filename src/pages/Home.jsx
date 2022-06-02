@@ -17,8 +17,14 @@ function Home() {
 
   return (
     <>
-      <HeaderFilter />
-      <PlanetsTable />
+    <section className="content-container">
+      <div className="header-container">
+        <HeaderFilter />
+      </div>
+      <div className="table-container">
+        <PlanetsTable />
+      </div>
+    </section>
     </>
   );
 }
